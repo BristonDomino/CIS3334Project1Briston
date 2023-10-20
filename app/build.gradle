@@ -4,7 +4,7 @@ plugins {
 
 android {
     namespace 'css.cis3334.cis3334project1briston'
-    compileSdk 33
+    compileSdk 34
 
     defaultConfig {
         applicationId "css.cis3334.cis3334project1briston"
