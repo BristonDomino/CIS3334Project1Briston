@@ -3,6 +3,11 @@ package css.cis3334.cis3334project1briston;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+import java.util.Objects;
+
+/**
+ *
+ */
 @Entity
 public class Task
 {
@@ -14,15 +19,21 @@ public class Task
 
     /* Getters, setters and maybe other methods go down here. **/
 
-    // Constructors
-    public Task(String taskName, boolean completed)
+    /**
+     * Constructor
+     * @param taskName
+     */
+    public Task(String taskName)
     {
         this.taskName = taskName;
-        this.completed = completed;
+        this.completed = completed = false;
     }
 
     /* Getters **/
 
+    /**
+     *
+     */
     public Task()
     {
 
@@ -49,12 +60,14 @@ public class Task
      */
     public boolean isCompleted()
     {
-
         return completed;
     }
 
     /* Setters **/
 
+    /**
+     * @param id
+     */
     public void setId(int id)
     {
         this.id = id;
@@ -74,8 +87,37 @@ public class Task
      */
     public void setCompleted(boolean completed)
     {
-
         this.completed = completed;
+    }
+
+    /**
+     * @param obj
+     * @return
+     */
+    @Override
+    public boolean equals(Object obj)
+    {
+        if (this == obj)
+        {
+            return true;
+        }
+
+        if (obj == null || getClass() != obj.getClass())
+        {
+            return false;
+        }
+        Task task = (Task) obj;
+
+        return id == task.id;
+    }
+
+    /**
+     * @return
+     */
+    @Override
+    public int hashCode()
+    {
+        return Objects.hash(id);
     }
 
 }

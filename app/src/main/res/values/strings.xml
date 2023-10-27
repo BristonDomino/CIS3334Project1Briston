@@ -15,4 +15,6 @@
     <string name="add_task">Add Task</string>
     <string name="update_task">Update Task</string>
     <string name="delete_task">Delete Task</string>
+    <string name="sample_task">Sample Task</string>
+    <string name="to_do_list">To Do list</string>
 </resources>

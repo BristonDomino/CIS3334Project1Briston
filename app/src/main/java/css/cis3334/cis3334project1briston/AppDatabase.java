@@ -1,11 +1,15 @@
 package css.cis3334.cis3334project1briston;
 
 import android.content.Context;
+import android.util.Log;
 
 import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
 
+/**
+ *
+ */
 @Database(entities = {Task.class}, version = 1)
 public abstract class AppDatabase extends RoomDatabase
 {
@@ -14,6 +18,10 @@ public abstract class AppDatabase extends RoomDatabase
      */
     public abstract TaskDao taskDao();
 
+
+    /**
+     *
+     */
     private static AppDatabase INSTANCE;
 
     /**
@@ -26,9 +34,10 @@ public abstract class AppDatabase extends RoomDatabase
         {
             INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
                     AppDatabase.class, "task_database")
-                    .fallbackToDestructiveMigration()
                     .build();
+
         }
+        Log.d("CIS 3334","Database test");
 
         return INSTANCE;
     }
