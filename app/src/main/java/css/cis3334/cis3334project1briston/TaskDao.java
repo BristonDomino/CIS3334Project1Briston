@@ -10,31 +10,42 @@ import androidx.room.Update;
 import java.util.List;
 
 /**
+ * TaskDao defines the data access methods for the Task database operations.
+ * It provides methods to insert, update, delete, and retrieve tasks.
  *
+ * @author Briston
  */
 @Dao
 public interface TaskDao
 {
     /**
-     * @param task
+     * Inserts a new task into the database.
+     *
+     * @param task The task object to be inserted.
      */
     @Insert
     void insert(Task task);
 
     /**
-     * @param task
+     * Updates an existing task in the database.
+     *
+     * @param task The task object to be updated.
      */
     @Update
     void update(Task task);
 
     /**
-     * @param task
+     * Deletes a task from the database.
+     *
+     * @param task The task object to be deleted.
      */
     @Delete
     void delete(Task task);
 
     /**
-     * @return
+     * Retrieves all tasks from the database.
+     *
+     * @return LiveData containing a list of all tasks.
      */
     @Query("SELECT * FROM task")
     LiveData<List<Task>> getAllTasks();

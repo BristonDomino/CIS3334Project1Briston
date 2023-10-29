@@ -15,7 +15,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 
 /**
- *
+ * ViewHolder for Task items in the RecyclerView. It defines the interaction of
+ * UI elements within the item such as EditText, CheckBox, and Button.
  */
 public class TaskViewHolder extends RecyclerView.ViewHolder
 {
@@ -34,8 +35,9 @@ public class TaskViewHolder extends RecyclerView.ViewHolder
 
 
     /**
-     * @param
-     * @param itemView
+     * Constructor for TaskViewHolder. Initializes UI elements and setup listeners.
+     *
+     * @param itemView The current item view.
      */
     public TaskViewHolder(@NonNull View itemView)
     {
@@ -100,13 +102,12 @@ public class TaskViewHolder extends RecyclerView.ViewHolder
                 Log.d("TaskViewHolder", "currentTask is null");
             }
         });
-
-
-
     }
 
     /**
-     * @return
+     * Checks if the task is marked as completed.
+     *
+     * @return True if the task is checked as completed, otherwise false
      */
     public boolean isTaskChecked()
     {

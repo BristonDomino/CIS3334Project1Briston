@@ -10,7 +10,8 @@ import androidx.lifecycle.LiveData;
 import java.util.List;
 
 /**
- *
+ * ViewModel class that provides a layer of abstraction between UI and the data source.
+ * It manages and prepares the data for the UI components and handles configuration changes.
  */
 public class TaskViewModel extends AndroidViewModel
 {
@@ -19,7 +20,9 @@ public class TaskViewModel extends AndroidViewModel
     private LiveData<List<Task>> allTasks;
 
     /**
-     * @param application
+     * Constructor for TaskViewModel. Initializes the repository and fetches all tasks.
+     *
+     * @param application The application context.
      */
     public TaskViewModel(@NonNull Application application)
     {
@@ -29,7 +32,9 @@ public class TaskViewModel extends AndroidViewModel
     }
 
     /**
-     * Expose the method to insert a task to the UI
+     * Inserts a task into the database.
+     *
+     * @param task The task to be inserted.
      */
     public void insert(Task task)
     {
@@ -37,17 +42,19 @@ public class TaskViewModel extends AndroidViewModel
     }
 
     /**
-     * Expose the method to update a task to the UI
+     * Updates an existing task in the database.
+     *
+     * @param task The task to be updated.
      */
     public void update(Task task)
     {
-        Log.d("cis3334","save test");
         repository.update(task);
     }
 
     /**
-     * Expose the method to delete a task to the UI
+     * Deletes a task from the database.
      *
+     * @param task The task to be deleted.
      */
     public void delete(Task task)
     {
@@ -55,13 +62,12 @@ public class TaskViewModel extends AndroidViewModel
     }
 
     /**
-     * Expose the method to retrieve all tasks to the UI
-     * @return
+     * Retrieves all task from the database.
+     *
+     * @return LiveData list of all tasks.
      */
     public LiveData<List<Task>> getAllTasks()
     {
-
-
         return allTasks;
     }
 

@@ -1,12 +1,16 @@
 package css.cis3334.cis3334project1briston;
 
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 import java.util.Objects;
 
 /**
+ * Task represents a task object that contains information about a particular task.
+ * Each task has an ID, a name, and a completion status.
  *
+ * @author Briston
  */
 @Entity
 public class Task
@@ -17,22 +21,22 @@ public class Task
     private String taskName;
     private boolean completed;
 
-    /* Getters, setters and maybe other methods go down here. **/
-
     /**
-     * Constructor
-     * @param taskName
+     * Constructor to create a new Task object with a specified name.
+     * The completion status is initialized to false.
+     * @param taskName The name of the Task.
      */
+    @Ignore
     public Task(String taskName)
     {
         this.taskName = taskName;
-        this.completed = completed = false;
+        this.completed = false;
     }
 
     /* Getters **/
 
     /**
-     *
+     * Default constructor.
      */
     public Task()
     {
@@ -40,7 +44,9 @@ public class Task
     }
 
     /**
-     * @return
+     * Retrieves the ID of the Task.
+     *
+     * @return The task ID
      */
     public int getId()
     {
@@ -48,7 +54,9 @@ public class Task
     }
 
     /**
-     * @return
+     * Retrieves the name of the task.
+     *
+     * @return The task name.
      */
     public String getTaskName()
     {
@@ -56,7 +64,9 @@ public class Task
     }
 
     /**
-     * @return
+     * Checks if the task is completed or not.
+     *
+     * @return True if the task is completed, false otherwise.
      */
     public boolean isCompleted()
     {
@@ -66,7 +76,9 @@ public class Task
     /* Setters **/
 
     /**
-     * @param id
+     * Sets teh ID for the task.
+     *
+     * @param id The task ID to set.
      */
     public void setId(int id)
     {
@@ -74,16 +86,19 @@ public class Task
     }
 
     /**
-     * @param taskName
+     * Sets the name for the task.
+     *
+     * @param taskName The task name to set.
      */
     public void setTaskName(String taskName)
     {
-
         this.taskName = taskName;
     }
 
     /**
-     * @param completed
+     * Sets the completion status for the task.
+     *
+     * @param completed The completion status to set.
      */
     public void setCompleted(boolean completed)
     {
@@ -91,8 +106,11 @@ public class Task
     }
 
     /**
-     * @param obj
-     * @return
+     * Compares the current Task object to another object.
+     * The tasks are considered equal if their IDs are the same.
+     *
+     * @param obj The object to compare to.
+     * @return True if the objects are equal, false otherwise.
      */
     @Override
     public boolean equals(Object obj)
@@ -112,7 +130,9 @@ public class Task
     }
 
     /**
-     * @return
+     * Generates a hash code for the Task object based on its ID.
+     *
+     * @return The hash code for the Task object.
      */
     @Override
     public int hashCode()

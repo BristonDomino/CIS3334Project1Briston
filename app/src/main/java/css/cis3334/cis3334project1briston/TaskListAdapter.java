@@ -1,8 +1,5 @@
 package css.cis3334.cis3334project1briston;
 
-import static androidx.core.app.ActivityCompat.recreate;
-import static androidx.core.content.ContextCompat.startActivity;
-
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
@@ -12,24 +9,25 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.ListAdapter;
-import androidx.recyclerview.widget.RecyclerView;
 
 /**
- *
+ * Adapter class for the Task list.
+ * Manages data between the database and the UI.
  */
 public class TaskListAdapter extends ListAdapter<Task, TaskViewHolder>
 {
     private final TaskViewModel taskViewModel;
 
     /**
+     * Constructor for the TaskListAdapter.
      *
-     * @param diffCallback
+     * @param diffCallback  Utility tool to calculate the difference between two lists.
+     * @param taskViewModel The ViewModel containing data for the UI.
      */
     public TaskListAdapter(@NonNull DiffUtil.ItemCallback<Task> diffCallback, TaskViewModel taskViewModel)
     {
@@ -38,10 +36,12 @@ public class TaskListAdapter extends ListAdapter<Task, TaskViewHolder>
     }
 
     /**
+     * Called when RecyclerView needs a new {@link TaskViewHolder}.
+     *
      * @param parent   The ViewGroup into which the new View will be added after it is bound to
      *                 an adapter position.
      * @param viewType The view type of the new View.
-     * @return
+     * @return          New ViewHolder.
      */
     @NonNull
     @Override
@@ -52,6 +52,8 @@ public class TaskListAdapter extends ListAdapter<Task, TaskViewHolder>
     }
 
     /**
+     * Binds the data to the {@link TaskViewHolder}.
+     *
      * @param holder   The ViewHolder which should be updated to represent the contents of the
      *                 item at the given position in the data set.
      * @param position The position of the item within the adapter's data set.
@@ -65,9 +67,7 @@ public class TaskListAdapter extends ListAdapter<Task, TaskViewHolder>
         holder.checkBoxCompleted.setChecked(currentTask.isCompleted());
 
         holder.editTextViewTaskName.setOnClickListener(view ->
-        {
-            showEditTaskDialog(view.getContext(), currentTask);
-        });
+                showEditTaskDialog(view.getContext(), currentTask));
 
         holder.editTextViewTaskName.setOnEditorActionListener((v, actionId, event) -> {
             if (actionId == EditorInfo.IME_ACTION_DONE)
@@ -92,8 +92,10 @@ public class TaskListAdapter extends ListAdapter<Task, TaskViewHolder>
     }
 
     /**
-     * @param context
-     * @param task
+     * Display a dialog to edit a tasks.
+     *
+     * @param context Context in which the dialog is shown.
+     * @param task    Task to be edited.
      */
     private void showEditTaskDialog(Context context, Task task)
     {
@@ -130,14 +132,16 @@ public class TaskListAdapter extends ListAdapter<Task, TaskViewHolder>
     }
 
     /**
-     *
+     * Utility class to calculate the difference between two lists.
      */
     static class TaskDiff extends DiffUtil.ItemCallback<Task>
     {
         /**
+         * Check if two tasks are the same.
+         *
          * @param oldItem The item in the old list.
          * @param newItem The item in the new list.
-         * @return
+         * @return         True if items are the same, false otherwise.
          */
         @Override
         public boolean areItemsTheSame(@NonNull Task oldItem, @NonNull Task newItem)
@@ -146,9 +150,11 @@ public class TaskListAdapter extends ListAdapter<Task, TaskViewHolder>
         }
 
         /**
+         * Check if the contents of two tasks are the same
+         *
          * @param oldItem The item in the old list.
          * @param newItem The item in the new list.
-         * @return
+         * @return         True if contents are the same, false otherwise.
          */
         @Override
         public boolean areContentsTheSame(@NonNull Task oldItem, @NonNull Task newItem)
