@@ -31,7 +31,7 @@ public class TaskViewHolder extends RecyclerView.ViewHolder
      CheckBox checkBoxCompleted;
 
      // save button
-     Button doneButton1;
+     Button doneButton;
 
 
     /**
@@ -44,7 +44,7 @@ public class TaskViewHolder extends RecyclerView.ViewHolder
         super(itemView);
         editTextViewTaskName = itemView.findViewById(R.id.task_text);
         checkBoxCompleted = itemView.findViewById(R.id.task_checkbox);
-        doneButton1 = itemView.findViewById(R.id.doneButton);
+        doneButton = itemView.findViewById(R.id.doneButton);
 
         // Initialize the taskViewModel
         taskViewModel = new ViewModelProvider((AppCompatActivity) itemView.getContext()).get(TaskViewModel.class);
@@ -85,7 +85,7 @@ public class TaskViewHolder extends RecyclerView.ViewHolder
 //        });
 
         // code for done button
-        doneButton1.setOnClickListener(view -> {
+        doneButton.setOnClickListener(view -> {
             if (currentTask != null)
             {
                 currentTask.setTaskName(editTextViewTaskName.getText().toString());

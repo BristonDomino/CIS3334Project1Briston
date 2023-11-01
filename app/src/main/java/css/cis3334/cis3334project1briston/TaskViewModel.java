@@ -1,7 +1,6 @@
 package css.cis3334.cis3334project1briston;
 
 import android.app.Application;
-import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;

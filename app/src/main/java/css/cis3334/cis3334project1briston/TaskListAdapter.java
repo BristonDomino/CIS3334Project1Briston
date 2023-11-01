@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
 import androidx.annotation.NonNull;
@@ -22,6 +23,8 @@ import androidx.recyclerview.widget.ListAdapter;
 public class TaskListAdapter extends ListAdapter<Task, TaskViewHolder>
 {
     private final TaskViewModel taskViewModel;
+
+    private TaskListAdapter adapter;
 
     /**
      * Constructor for the TaskListAdapter.
@@ -67,16 +70,21 @@ public class TaskListAdapter extends ListAdapter<Task, TaskViewHolder>
         holder.checkBoxCompleted.setChecked(currentTask.isCompleted());
 
         holder.editTextViewTaskName.setOnClickListener(view ->
-                showEditTaskDialog(view.getContext(), currentTask));
+                showEditTaskDialog(view.getContext(), currentTask, holder));
 
-        holder.editTextViewTaskName.setOnEditorActionListener((v, actionId, event) -> {
-            if (actionId == EditorInfo.IME_ACTION_DONE)
-            {
-                v.clearFocus();
-                return true;
-            }
-            return false;
-        });
+//        EditText taskInputEditText = holder.itemView.findViewById(R.id.task_text);
+//
+//        taskInputEditText.requestFocus(); // Set focus to the EditText
+
+
+//        holder.editTextViewTaskName.setOnEditorActionListener((v, actionId, event) -> {
+//            if (actionId == EditorInfo.IME_ACTION_DONE)
+//            {
+//                v.clearFocus();
+//                return true;
+//            }
+//            return false;
+//        });
 
         holder.editTextViewTaskName.setOnEditorActionListener((v, actionId, event) -> {
             if (actionId == EditorInfo.IME_ACTION_DONE) {
@@ -89,6 +97,18 @@ public class TaskListAdapter extends ListAdapter<Task, TaskViewHolder>
             }
             return false;
         });
+
+        // this check if the current task is the new one the user just added and then shows the keyboard
+        if (position == getItemCount() - 1)
+        {
+            holder.editTextViewTaskName.post(() ->
+            {
+                holder.editTextViewTaskName.requestFocus();
+
+                InputMethodManager imm = (InputMethodManager) holder.itemView.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.showSoftInput(holder.editTextViewTaskName, InputMethodManager.SHOW_IMPLICIT);
+            });
+        }
     }
 
     /**
@@ -97,7 +117,7 @@ public class TaskListAdapter extends ListAdapter<Task, TaskViewHolder>
      * @param context Context in which the dialog is shown.
      * @param task    Task to be edited.
      */
-    private void showEditTaskDialog(Context context, Task task)
+    private void showEditTaskDialog(Context context, Task task, TaskViewHolder holder)
     {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setTitle("Edit task");
@@ -106,6 +126,11 @@ public class TaskListAdapter extends ListAdapter<Task, TaskViewHolder>
         input.setText(task.getTaskName());
         builder.setView(input);
 
+        input.requestFocus();
+        input.post(() -> {
+            InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.showSoftInput(input, InputMethodManager.SHOW_IMPLICIT);
+        });
 
         builder.setPositiveButton("OK", (dialog, which) -> {
             String newTaskName = input.getText().toString();
@@ -120,15 +145,7 @@ public class TaskListAdapter extends ListAdapter<Task, TaskViewHolder>
             Log.d("cis3334", "after ok");
         }).setNegativeButton("Cancel", (dialog, which) -> dialog.cancel());
 
-
-        //builder.setOnDismissListener(dialog -> {
-//            InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
-//            imm.hideSoftInputFromWindow(input.getWindowToken(), 0);
-//        });
-
        builder.show();
-
-
     }
 
     /**

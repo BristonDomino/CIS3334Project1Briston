@@ -4,7 +4,9 @@ import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.Adapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -34,7 +36,6 @@ public class MainActivity extends AppCompatActivity
      */
     private TaskListAdapter adapter;
 
-
     /**
      * Called when activity is starting.
      * Initializes the UI components, sets up the RecyclerView, and sets up button click listeners.
@@ -51,7 +52,8 @@ public class MainActivity extends AppCompatActivity
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         // Hides keyboard when user touches outside the input area
-        findViewById(R.id.mainLayout).setOnTouchListener((v, event) -> {
+        findViewById(R.id.mainLayout).setOnTouchListener((v, event) ->
+        {
             if (getCurrentFocus() != null) {
                 InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                 imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
@@ -59,6 +61,7 @@ public class MainActivity extends AppCompatActivity
             }
             return false;
         });
+
 
         // Initialize ViewModel for tasks
         taskViewModel = new ViewModelProvider(this).get(TaskViewModel.class);
@@ -75,14 +78,17 @@ public class MainActivity extends AppCompatActivity
         Button removeTaskButton = findViewById(R.id.removeTaskButton);
 
         // Listener for when the user clicks on add task button and displays Task added using a Toast message
-        addTaskButton.setOnClickListener(view -> {
+        addTaskButton.setOnClickListener(view ->
+        {
             Task newTask = new Task("");
             taskViewModel.insert(newTask);
             Toast.makeText(this, "Task added!", Toast.LENGTH_SHORT).show();
+            adapter.notifyDataSetChanged();
         });
 
         // Listener for when removing the task after the user clicks on Remove task and displays a Toast message saying Task Removed!
-        removeTaskButton.setOnClickListener(view -> {
+        removeTaskButton.setOnClickListener(view ->
+        {
             List<Task> tasksToRemove = new ArrayList<>();
             for (int i = 0; i < recyclerView.getChildCount(); i++)
             {
@@ -100,11 +106,14 @@ public class MainActivity extends AppCompatActivity
                 taskViewModel.delete(task);
             }
 
+            // Get the currently focused view, which is EditText
+            View focusedView = getCurrentFocus();
+            if (focusedView != null) {
+                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(focusedView.getWindowToken(), 0);
+            }
+
             Toast.makeText(this, "Task removed!", Toast.LENGTH_SHORT).show();
         });
-
-
     }
-
-
 }

@@ -19,8 +19,6 @@ public class TaskRepository
 
     private static final ExecutorService executor = Executors.newSingleThreadExecutor();
 
-
-
     /**
      * Constructor for TaskRepository
      *
@@ -43,7 +41,6 @@ public class TaskRepository
     public void insert(Task task)
     {
         executor.execute(() -> taskDao.insert(task));
-
     }
 
     /**
@@ -54,7 +51,6 @@ public class TaskRepository
     public void update(Task task)
     {
         executor.execute(() -> taskDao.update(task));
-
     }
 
     /**
@@ -65,7 +61,6 @@ public class TaskRepository
     public void delete(Task task)
     {
         executor.execute(() -> taskDao.delete(task));
-
     }
 
     /**
